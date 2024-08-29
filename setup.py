@@ -3,7 +3,7 @@
 """
 from setuptools import setup
 setup(
-    name = "String to synthesis wav files ",
+    name = "str2speak",
     version = "1.0",
     packages=["pkg_str2speak"],
     author="Aluisio Leonello Victal",
