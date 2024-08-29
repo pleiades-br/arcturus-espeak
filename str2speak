@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+import sys
+import argparse
+from pkg_str2speak.espeak import ESpeak
+
+def main():
+    '''
+        Argument parsing with argparse and main job
+    '''
+    parser = argparse.ArgumentParser(description='Interface for espeak library')
+    parser.add_argument(
+        'text', 
+        type=str, 
+        help='String used to transform to audio'
+    )
+    parser.add_argument(
+        '--output-file',
+        type=str,
+        default='text_output.wav',
+        help='Output file name for WAV file generation. (default: \"text_output.wav\")'
+    )
+    parser.add_argument(
+        '--text-pitch', 
+        type=int, 
+        default=30, 
+        help=' Pitch adjustment, 0 to 99, default is 32'
+    )
+    parser.add_argument(
+        '--text-gap', 
+        type=int, 
+        default=1, 
+        help=' Word gap. Pause between words, units of 10mS at the default speed'
+    )
+    parser.add_argument(
+        '--text-capitals', 
+        type=int, 
+        default=1, 
+        help='Indicate capital letters with: 1=sound, 2=the word "capitals"'
+    )
+    parser.add_argument(
+        '--text-speed', 
+        type=int, 
+        default=125, 
+        help=' Speed in approximate words per minute. The default is 175'
+    )
+    parser.add_argument(
+        '--text-volume', 
+        type=int, 
+        default=100, 
+        help='Volume, 0 to 200, default is 100'
+    )
+    parser.add_argument(
+        '--text-male-voice', 
+        action='store_true', 
+        help='Use a male voice instead a female voice'
+    )
+    args = parser.parse_args()
+
+    engine = ESpeak(
+        volume=args.text_volume, 
+        gap=args.text_gap, 
+        capitals=args.text_capitals, 
+        pitch=args.text_pitch, 
+        speed=args.text_speed, 
+        male_voice=args.text_male_voice
+    )
+    
+    try:
+        engine.save_wave_file(args.text,args.output_file)
+    except Exception as error:
+        print(f'We couldn\'t create the output file {args.output_file}. \
+                  Error {type(error).__name__} - {error}')
+
+if __name__ == "__main__":
+    sys.exit(main())
