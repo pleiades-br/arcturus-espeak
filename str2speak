@@ -41,7 +41,7 @@ def main():
         '--text-speed', 
         type=int, 
         default=125, 
-        help=' Speed in approximate words per minute. The default is 175'
+        help='Speed in approximate words per minute. The default is 175'
     )
     parser.add_argument(
         '--text-volume', 
